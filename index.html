@@ -5839,7 +5839,10 @@ window.addEventListener('hashchange', () => {
 // Hash stored in source, plaintext never present
 // ============================================================
 async function checkPwd() {
-  const storedHash = "bebc79734038e684e2d9bd00f8a0bcebb96fbffbdb699ffd076732806fe1cde0";
+  const storedHashes = [
+    "bebc79734038e684e2d9bd00f8a0bcebb96fbffbdb699ffd076732806fe1cde0",
+    "253bfb44c32d3066af094ac8e640262ef483d48e022391dbc6c79098a408bbb6"
+  ];
   const lockInput = document.getElementById('lock-pw');
   const lockMsg = document.getElementById('lock-msg');
   const input = lockInput.value;
@@ -5849,7 +5852,7 @@ async function checkPwd() {
     const buffer = await crypto.subtle.digest('SHA-256', data);
     const hashHex = Array.from(new Uint8Array(buffer))
       .map(b => b.toString(16).padStart(2, '0')).join('');
-    if (hashHex === storedHash) {
+    if (storedHashes.includes(hashHex)) {
       // Success: fade the lock screen out
       const lock = document.getElementById('lock-screen');
       lock.classList.add('unlocked');
